@@ -1,0 +1,9 @@
+--------[ 2015-03-24 00:00:00 -0400 ]
+
+urb.BPMB.detmap =
+      2    23    20    23     1  1881
+urb.BPMB.position = 0.00493647  -0.00602042  -2.214
+urb.BPMB.calib_rot = 0.01887
+urb.BPMB.pedestals = 524  490  493  545
+urb.BPMB.rotmatrix = 0.659737  -0.836241  0.646295  0.839493
+

@@ -1,0 +1,9 @@
+--------[ 2016-02-05 00:00:00 -0500 ]
+
+Rurb.BPMA.detmap =
+      1    22     0     3     1  1881
+Rurb.BPMA.position = -0.00102968  0.00167268  -7.345
+Rurb.BPMA.calib_rot = 0.01887
+Rurb.BPMA.pedestals = 3387  3356  3427  3484
+Rurb.BPMA.rotmatrix = 0.73589  -0.764353  0.805468  0.749956
+

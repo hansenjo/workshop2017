@@ -1,0 +1,9 @@
+--------[ 2016-02-05 00:00:00 -0500 ]
+
+Rurb.BPMB.detmap =
+      1    22     4     7     1  1881
+Rurb.BPMB.position = -3.23344e-04  -8.90677e-04  -2.21400e+00
+Rurb.BPMB.calib_rot = 0.01887
+Rurb.BPMB.pedestals = 3617  3501  3371  3385
+Rurb.BPMB.rotmatrix = 0.75004  -0.773907  0.826183  0.762423
+

@@ -1,0 +1,17 @@
+--------[ 2017-01-30 00:00:00 -0500 ]
+
+urb.BPMB.detmap =
+      2    23    20    23     1  1881
+urb.BPMB.position = 0.00493647  -0.00602042  -2.214
+urb.BPMB.calib_rot = 0.01887
+urb.BPMB.pedestals = 524  490  493  545
+urb.BPMB.rotmatrix = 0.659737  -0.836241  0.646295  0.839493
+
+--------[ 2017-03-01 00:00:00 -0500 ]
+
+urb.BPMB.detmap =
+      3    21     7    10     1  1881
+urb.BPMB.position = 6.01645e-04  -9.85787e-04  -2.21400e+00
+urb.BPMB.pedestals = 3766  3666  3570  3405
+urb.BPMB.rotmatrix = -0.624004  0.761298  0.659681  0.708074
+
