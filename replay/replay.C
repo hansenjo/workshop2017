@@ -47,7 +47,7 @@ int replay() {
     return 0;
 
   // Check if the file with the requested run number exists
-  // Assume Hall A-style raw data files
+  // Assume Hall A-style raw data files ending with .dat.0
   string data_dir = gSystem->Getenv("DATA_DIR");
   if( data_dir.empty() )
     data_dir = ".";
@@ -162,7 +162,7 @@ int replay() {
   analyzer->Close();
   delete analyzer;
   gHaCuts->Clear();
-  gHaVars->Clear();
+  gHaVars->Delete();
   gHaPhysics->Delete();
   gHaApps->Delete();
 
