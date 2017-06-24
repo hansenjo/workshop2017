@@ -1,0 +1,11 @@
+# RHRS detectors
+block R.s0.*
+block R.s2.*
+block R.cer.*
+
+# All RHRS track data (focal plane as well as reconstructed to target)
+block R.tr.*
+
+# All RHRS VDC raw data (lots of information, only uncomment for debugging)
+block R.vdc.*
+
