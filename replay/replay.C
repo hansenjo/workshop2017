@@ -1,9 +1,9 @@
-// Simple example replay script
+// Simple example replay script for Hall A GMP12 and Argon40 data
 //
 // Ole Hansen, 22 June 2017
 
-#include "TString.h"
-#include <cstring>
+#include <string>
+#include <sstream>
 #include "THaRun.h"
 #include "THaAnalyzer.h"
 #include "THaGlobals.h"
@@ -23,15 +23,19 @@
 
 using namespace std;
 
+struct Experiment {
+  string name;
+  string arm;
+};
+
 int replay() {
   //--- Set up the run we want to replay ---
-
   // This often requires a bit of coding to search directories, test
   // for non-existent files, etc.
 
-  int run_number = 23062;
-  const char* experiments[] = { "gmp", "g2p", 0 };
-  const char* arms[]        = { "R", "L", 0 };
+  int run_number;
+  vector<Experiment> experiments = { {"gmp",  "R"},
+				     {"Ar40", "R"} };
   cout << "Here are the data files:" << endl;
   if( system("ls $DATA_DIR") != 0)
     return 1;
@@ -39,42 +43,45 @@ int replay() {
   // Get the run number
   cout << "Run number? ";
   cin >> run_number;
+  if( run_number < 0 )
+    return 0;
 
-  // Check if the input file exists
-  TString data_dir = gSystem->Getenv("DATA_DIR");
-  if( data_dir.IsNull() ) 
+  // Check if the file with the requested run number exists
+  // Assume Hall A-style raw data files
+  string data_dir = gSystem->Getenv("DATA_DIR");
+  if( data_dir.empty() )
     data_dir = ".";
-  const char** experiment = experiments;
-  TString run_file;
-  Bool_t found = false;
-  while( *experiment ) {
-    run_file = data_dir + "/" + *experiment + Form("_%d.dat.0",run_number);
-    if( !gSystem->AccessPathName(run_file) ) {
+  string run_file;
+  Experiment experiment;
+  bool found = false;
+  for( const Experiment& ex : experiments ) {
+    ostringstream ostr;
+    ostr << data_dir << "/" << ex.name << "_" << run_number << ".dat.0";
+    run_file = ostr.str();
+    if( !gSystem->AccessPathName(run_file.c_str()) ) {
       found = true;
+      experiment = ex;
       break;
     }
-    ++experiment;
   }
   if( found ) {
-    Info( "replay.C", "Replaying %s", run_file.Data() );
+    Info( "replay.C", "Replaying %s", run_file.c_str() );
   } else {
     Error( "replay.C", "Can't find run number %d", run_number );
     return 1;
   }
 
-  THaRun* run = new THaRun( run_file, Form("%s run %d optics data",
-					   *experiment, run_number ) );
+  THaRun* run = new THaRun( run_file.c_str(),
+			    Form("%s run %d", experiment.name.c_str(),
+				 run_number) );
 
   //--- Define the experimental configuration, i.e. spectrometers, detectors ---
 
-  const char* arm = arms[experiment-experiments];
+  const char* const arm = experiment.arm.c_str();
   gHaTextvars->Set("arm",arm);
   THaHRS* hrs = new THaHRS(arm, Form("%sHRS",arm));
-  THaVDC* vdc = dynamic_cast<THaVDC*>(hrs->GetDetector("vdc"));
-  if( !vdc ) {
-    vdc = new THaVDC("vdc", "Vertical Drift Chambers");
-    hrs->AddDetector(vdc);
-  }
+  THaVDC* vdc = new THaVDC("vdc", "Vertical Drift Chambers");
+  hrs->AddDetector(vdc);
   //  vdc->SetDebug(3);
   //  vdc->SetErrorCutoff(5);
   gHaApps->Add(hrs);
@@ -90,12 +97,12 @@ int replay() {
   cin >> nev;
   if( nev > 0 )
     run->SetLastEvent(nev);
-  
+
   //--- Set up any physics calculations we want to do ---
 
   // Extract the reconstructed target quantities of the golden track
   // Not really a physics calculation, but a convenience function.
-  // It effectively converts the L.tr.* variables, which are arrays, 
+  // It effectively converts the L.tr.* variables, which are arrays,
   // to scalers L.gold.*
 
   gHaPhysics->Add( new THaGoldenTrack( Form("%s.gold",arm),
@@ -109,7 +116,7 @@ int replay() {
 				       arm, 0.511e-3, 12*0.9315 ));
 
   // Vertex position calculated from RHRS golden track and ideal beam
-  // (will poor resolution if raster is on)
+  // (will have poor resolution if raster is on)
   gHaPhysics->Add( new THaReactionPoint( Form("%s.vx",arm),
 					 Form("Vertex %s",arm),
 					 arm, "IB" ));
@@ -117,23 +124,31 @@ int replay() {
   //--- Define what we want the analyzer to do ---
   // The only mandatory items are the output definition and output file names
 
-  gHaApps->Print();
-  gHaPhysics->Print();
-
   THaAnalyzer* analyzer = new THaAnalyzer;
 
-  TString out_dir = gSystem->Getenv("OUT_DIR");
-  if( out_dir.IsNull() )
+  string out_dir = gSystem->Getenv("OUT_DIR");
+  if( out_dir.empty() )
     out_dir = ".";
-  TString out_file = out_dir + "/" + *experiment + Form("_%d.root", run_number);
+  ostringstream ostr;
+  ostr << out_dir << "/" << experiment.name << "_" << run_number << ".root";
+  string out_file = ostr.str();
 
-  analyzer->SetOutFile( out_file );
+  analyzer->SetOutFile( out_file.c_str() );
 
   analyzer->SetCutFile( "replay.cdef" );
   analyzer->SetOdefFile( "replay.odef" );
 
   analyzer->SetVerbosity(2);  // write cut summary to stdout
   analyzer->EnableBenchmarks();
+  analyzer->EnableSlowControl(false);
+  analyzer->EnableHelicity(false);
+
+  // Initialize (not explicitly needed, if not done, Process() will do)
+  analyzer->Init(run);
+
+  // Print what we have defined
+  gHaApps->Print("DETS");
+  gHaPhysics->Print();
 
   //--- Analyze the run ---
   // Here, one could replay more than one run with
@@ -151,11 +166,11 @@ int replay() {
   gHaPhysics->Delete();
   gHaApps->Delete();
 
-  // Open the ROOT file so that a user doing interactive analysis can 
+  // Open the ROOT file so that a user doing interactive analysis can
   // immediately look at the results. Of course, don't do this in batch jobs!
   // To close the file later, simply type "delete rootfile" or just exit
 
-  TFile* rootfile = new TFile( out_file, "READ" );
+  TFile* rootfile = new TFile( out_file.c_str(), "READ" );
 
   return 0;
 }
