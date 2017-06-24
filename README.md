@@ -1,13 +1,15 @@
 # Hall A Analyzer Hands-On Tutorial
 This is a small replay and analysis setup for demonstration of
-the [Hall A C++ analyzer Podd](https://github.com/JeffersonLab/analyzer)
+the [Hall A C++ Analyzer Podd](https://github.com/JeffersonLab/analyzer)
 at the June 2017 Hall A & C Analysis
 [Workshop](http://hallaweb.jlab.org/data_reduc/AnaWork2017/) at JLab.
 
 ## Prerequisites
 It is assumed that you have both ROOT and the analyzer set up.
-Raw data files need to be linked or copied from JLab SciComp disks
-(/cache, /volatile, /work) or restored from tape.
+Exmaple raw data files are included in the virtual machine image
+distributed at the workshop. To run this tutorial outside of the
+virtual machine, appropriate files need to be linked or copied from
+JLab SciComp disks (/cache, /volatile, /work) or restored from tape.
 
 ## Setup
 Put data files or links to them in local directories, then update the
