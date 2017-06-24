@@ -1,26 +1,18 @@
-# Sample outout definition file
+# Example output definition file
 
 # All variables from the GoldenTrack module
 block ${arm}.gold.*
 
-# Inclusive electons scattering kinematical quantities for the RHRS
+# Inclusive electons scattering kinematical quantities for the HRS
 # form the PrimaryKine physics module
 block ${arm}.ekine.*
 
-# All RHRS track data (focal plane as well as reconstructed to target
+# All HRS track data (focal plane as well as reconstructed to target
 block ${arm}.tr.*
 
 # z-vertex from ReactionPoint module
 block ${arm}.vx.z
 
-# All RHRS VDC raw data (lots of information, only uncomment for debugging)
-block ${arm}.vdc.*
+# HRS VDC raw data (lots of information, only uncomment for debugging)
+#block ${arm}.vdc.*
 #block ${arm}.vdc.u1.*
-
-# Histogram test
-#TH2F Llsl 'u1 slope vs. local slope' ${arm}.vdc.u1.slope ${arm}.vdc.u1.lslope 100 0 3 100 0 3
-
-# Formula test
-#formula Lt4a 5.*${arm}.s1.lt[4]
-#formula Lt4b 5.*${arm}.s1.lt
-#formula Tsm 4*${arm}.s1.lt+2*${arm}.s1.rt
