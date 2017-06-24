@@ -35,7 +35,8 @@ int replay() {
 
   int run_number;
   vector<Experiment> experiments = { {"gmp",  "R"},
-				     {"Ar40", "R"} };
+				     {"Ar40", "R"},
+                                     {"g2p",  "L"} };
   cout << "Here are the data files:" << endl;
   if( system("ls $DATA_DIR") != 0)
     return 1;
