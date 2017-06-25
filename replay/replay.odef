@@ -11,7 +11,10 @@ block ${arm}.ekine.*
 block ${arm}.tr.*
 
 # z-vertex from ReactionPoint module
-block ${arm}.vx.z
+variable ${arm}.vx.z
+
+# HRS Cherenkov for electron ID
+variable ${arm}.cer.asum_c
 
 # HRS VDC raw data (lots of information, only uncomment for debugging)
 #block ${arm}.vdc.*

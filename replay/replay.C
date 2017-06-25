@@ -81,10 +81,11 @@ int replay() {
   const char* const arm = experiment.arm.c_str();
   gHaTextvars->Set("arm",arm);
   THaHRS* hrs = new THaHRS(arm, Form("%sHRS",arm));
-  THaVDC* vdc = new THaVDC("vdc", "Vertical Drift Chambers");
+  THaVDC* vdc = new THaVDC("vdc", Form("%sHRS Vertical Drift Chambers",arm));
   hrs->AddDetector(vdc);
   //  vdc->SetDebug(3);
   //  vdc->SetErrorCutoff(5);
+  hrs->AddDetector( new THaCherenkov("cer", Form("%sHRS gas Cherenkov",arm)));
   gHaApps->Add(hrs);
 
   // Ideal beam (perfect normal incidence and centering)
