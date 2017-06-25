@@ -16,6 +16,10 @@ variable ${arm}.vx.z
 # HRS Cherenkov for electron ID
 variable ${arm}.cer.asum_c
 
-# HRS VDC raw data (lots of information, only uncomment for debugging)
+# HRS wire numbers and drift times - for calibration check
+#block ${arm}.vdc.[uv][12].wire
+#block ${arm}.vdc.[uv][12].time
+
+# All HRS VDC raw data (lots of information, only uncomment for debugging)
 #block ${arm}.vdc.*
 #block ${arm}.vdc.u1.*
