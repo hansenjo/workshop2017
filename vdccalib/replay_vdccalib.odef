@@ -1,0 +1,5 @@
+# Replay variables for VDC TDC calibration
+
+block ${arm}.vdc.[uv][12].nhit
+block ${arm}.vdc.[uv][12].wire
+block ${arm}.vdc.[uv][12].rawtime
