@@ -1,3 +1,6 @@
 data
 *.txt
 rootfiles
+*.d
+*.pcm
+*.so
