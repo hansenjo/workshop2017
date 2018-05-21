@@ -2,11 +2,11 @@
 This is a small replay and analysis setup for demonstration of
 the [Hall A C++ Analyzer Podd](https://github.com/JeffersonLab/analyzer)
 at the June 2017 Hall A & C Analysis
-[Workshop](http://hallaweb.jlab.org/data_reduc/AnaWork2017/) at JLab.
+[Workshop](https://redmine.jlab.org/projects/podd/wiki/Workshop2017) at JLab.
 
 ## Prerequisites
 It is assumed that you have both ROOT and the analyzer set up.
-Exmaple raw data files are included in the virtual machine image
+Example raw data files are included in the virtual machine image
 distributed at the workshop. To run this tutorial outside of the
 virtual machine, appropriate files need to be linked or copied from
 JLab SciComp disks (/cache, /volatile, /work) or restored from tape.
@@ -16,7 +16,7 @@ Put data files or links to them in local directories, then update the
 included setup.sh accordingly. Run setup.sh to define the required
 environment variables `DB_DIR`, `DATA_DIR` and `OUT_DIR`.
 
-## Running
+## Replay
 To run the example replay, do
 
 ```bash
@@ -38,5 +38,5 @@ analyzer [0] .x plotR.C
 ```
 
 ## More Information
-Please see the the [presentation](http://hallaweb.jlab.org/data_reduc/AnaWork2017/HallA-Tutorial-Ole.pdf)
+Please see the the [presentation](http://hallaweb.jlab.org/data_reduc/AnaWork2017/Podd-Anawrk2017-2017-06-26.pdf)
 given at the workshop.
