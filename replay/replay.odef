@@ -23,3 +23,6 @@ variable ${arm}.cer.asum_c
 # All HRS VDC raw data (lots of information, only uncomment for debugging)
 #block ${arm}.vdc.*
 #block ${arm}.vdc.u1.*
+
+block ${arm}.vdc.uv1.*
+block ${arm}.vdc.uv2.*

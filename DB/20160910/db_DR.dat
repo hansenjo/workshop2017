@@ -1,0 +1,22 @@
+# This must be on the first line:  Version: 2
+# Example decoder data definition file
+# Taken from December 2012 online replay database
+# See THaDecData.C for documentation.
+
+DR.word =
+# syncclock
+          syncroc1   5    fabc0009   5
+          syncroc2   8    fabc0008   4
+          syncroc3   9    fabc0008   4
+          syncroc4   10    fabc0008   4
+
+        
+DR.bit =
+         bit1          6    16    48    0  20000
+         bit2          6    16    49    0  20000  
+         bit3          6    16    50    0  20000
+         bit4          6    16    51    0  20000
+         bit5          6    16    52    0  20000
+         bit6          6    16    53    0  20000 
+         bit7          6    16    54    0  20000
+         bit8          6    16    55    0  20000

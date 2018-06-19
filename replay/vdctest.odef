@@ -1,0 +1,14 @@
+# vdctest output definition file
+
+# All HRS track data (focal plane as well as reconstructed to target
+block ${arm}.tr.*
+block ${oldarm}.tr.*
+
+# z-vertex from ReactionPoint module
+variable ${arm}.vx.z
+variable ${arm}.vx.ok
+variable ${oldarm}.vx.z
+variable ${oldarm}.vx.ok
+
+# HRS Cherenkov for electron ID
+variable ${arm}.cer.asum_c

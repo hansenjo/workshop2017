@@ -1,0 +1,18 @@
+# vdctest cut definition file
+
+Block: Reconstruct
+MultiClusterOld   ${oldarm}.vdc.u1.nclust>1||${arm}.vdc.v1.nclust>1||${arm}.vdc.u2.nclust>1||${arm}.vdc.v2.nclust>1
+MultiClusterNew   ${arm}.vdc.u1.nclust>1||${oldarm}.vdc.v1.nclust>1||${oldarm}.vdc.u2.nclust>1||${oldarm}.vdc.v2.nclust>1
+
+MultiTrackOld     ${oldarm}.tr.n>1
+MultiTrackNew     ${arm}.tr.n>1
+
+GoodVertexOld     abs(${oldarm}.vx.z)<0.1
+GoodVertexNew     abs(${arm}.vx.z)<0.1
+
+HaveTrackOld      ${oldarm}.tr.n>0&&GoodVertexOld
+HaveTrackNew      ${arm}.tr.n>0&&GoodVertexNew
+
+Electron          ${arm}.cer.asum_c>50
+ElectronTrackOld  HaveTrackOld&&Electron
+ElectronTrackNew  HaveTrackNew&&Electron
