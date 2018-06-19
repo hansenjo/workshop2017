@@ -30,7 +30,7 @@ struct Experiment {
   string arm;
 };
 
-int replay() {
+int replay_tdctest() {
   //--- Set up the run we want to replay ---
   // This often requires a bit of coding to search directories, test
   // for non-existent files, etc.
@@ -88,13 +88,17 @@ int replay() {
   hrs->AddDetector(vdc);
   //  vdc->SetDebug(3);
   //  vdc->SetErrorCutoff(5);
-  hrs->AddDetector( new THaScintillator("s2", Form("%sHRS S2m scintillator",arm)));
-  hrs->AddDetector( new THaCherenkov("cer", Form("%sHRS gas Cherenkov",arm)));
+  THaDetector* s2 = new THaScintillator("s2", Form("%sHRS S2m scintillator",arm));
+  //  s2->SetDebug(1);
+  hrs->AddDetector(s2);
+  THaDetector* cer = new THaCherenkov("cer", Form("%sHRS gas Cherenkov",arm));
+  //  cer->SetDebug(1);
+  hrs->AddDetector(cer);
   gHaApps->Add(hrs);
 
   // Ideal beam (perfect normal incidence and centering)
-  THaIdealBeam* ib = new THaIdealBeam("IB", "Ideal beam");
-  gHaApps->Add(ib);
+  // THaIdealBeam* ib = new THaIdealBeam("IB", "Ideal beam");
+  // gHaApps->Add(ib);
 
   // Define how many events we want to analyze. This is a property of the run
   // because the ranges of good events could be different for different runs
@@ -112,20 +116,20 @@ int replay() {
   // to scalers L.gold.*
 
   gHaPhysics->Add( new THaGoldenTrack( Form("%s.gold",arm),
-				       Form("%sHRS golden track",arm)
-				       , arm ));
+  				       Form("%sHRS golden track",arm)
+  				       , arm ));
 
   // Single-arm electron kinematics for the one spectrometer we have set up.
   // We assume a carbon-12 target (12 AMU)
-  gHaPhysics->Add( new THaPrimaryKine( Form("%s.ekine",arm),
-				       Form("%sHRS electron kinematics",arm),
-				       arm, 0.511e-3, 12*0.9315 ));
+  // gHaPhysics->Add( new THaPrimaryKine( Form("%s.ekine",arm),
+  // 				       Form("%sHRS electron kinematics",arm),
+  // 				       arm, 0.511e-3, 12*0.9315 ));
 
   // Vertex position calculated from RHRS golden track and ideal beam
   // (will have poor resolution if raster is on)
-  gHaPhysics->Add( new THaReactionPoint( Form("%s.vx",arm),
-					 Form("Vertex %s",arm),
-					 arm, "IB" ));
+  // gHaPhysics->Add( new THaReactionPoint( Form("%s.vx",arm),
+  // 					 Form("Vertex %s",arm),
+  // 					 arm, "IB" ));
 
   //--- Define what we want the analyzer to do ---
   // The only mandatory items are the output definition and output file names
@@ -136,13 +140,14 @@ int replay() {
   if( out_dir.empty() )
     out_dir = ".";
   ostringstream ostr;
-  ostr << out_dir << "/" << experiment.name << "_" << run_number << ".root";
+  ostr << out_dir << "/" << experiment.name << "_" << run_number
+       << "_tdctest.root";
   string out_file = ostr.str();
 
   analyzer->SetOutFile( out_file.c_str() );
 
-  analyzer->SetCutFile( "replay.cdef" );
-  analyzer->SetOdefFile( "replay.odef" );
+  analyzer->SetCutFile( "replay_tdctest.cdef" );
+  analyzer->SetOdefFile( "replay_tdctest.odef" );
 
   analyzer->SetVerbosity(2);  // write cut summary to stdout
   analyzer->EnableBenchmarks();

@@ -1,0 +1,8 @@
+# Sample cut definition file
+
+Block: Physics
+GoodGoldenTrack		${arm}.gold.ok==1
+GoodPhi			abs(${arm}.gold.ph)<0.05
+GoodTheta		abs(${arm}.gold.th)<0.1
+InAcceptance		GoodPhi&&GoodTheta
+Physics_master		GoodGoldenTrack

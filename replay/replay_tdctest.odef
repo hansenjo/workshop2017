@@ -1,0 +1,11 @@
+# Example output definition file
+
+# All HRS track data (focal plane as well as reconstructed to target
+block ${arm}.tr.*
+
+# HRS S2
+block ${arm}.s2.*
+
+# HRS Cherenkov
+block ${arm}.cer.*
+
