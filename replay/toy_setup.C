@@ -19,8 +19,8 @@ void toy_setup() {
   RHRS->AddDetector( new THaCherenkov("cer","RHRS Ckov"));
   gHaApps->Add(RHRS);
   analyzer = new THaAnalyzer;
-  run = new THaRun("/data/raw/gmp_23062.dat.0");
+  run = new THaRun("/work/halla/gmp12/ole/raw/gmp_21960.dat.0");
   run->SetLastEvent(10000);
-  analyzer->SetOutFile("rootfiles/junk.root");
+  analyzer->SetOutFile("junk.root");
   analyzer->EnableBenchmarks();
 }
